@@ -24,7 +24,6 @@ class DirectionInput {
 
       if (direction && this.heldDirections.indexOf(direction) === -1) {
         this.heldDirections.unshift(direction);
-        console.log(this.heldDirections);
       }
 
       document.addEventListener('keyup', (e) => {
@@ -33,7 +32,6 @@ class DirectionInput {
 
         if (index > -1) {
           this.heldDirections.splice(index, 1);
-          console.log(this.heldDirections);
         }
       });
     });
