@@ -29,6 +29,8 @@ class Overworld {
         object.sprite.draw(this.ctx, cameraPerson);
       });
 
+      //
+
       // Draw upper layer
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
