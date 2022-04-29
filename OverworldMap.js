@@ -1,6 +1,7 @@
 class OverworldMap {
   constructor(config) {
     this.gameObjects = config.gameObjects;
+    this.walls = config.walls || {};
 
     this.lowerImage = new Image();
     this.lowerImage.src = config.lowerSrc;
@@ -9,6 +10,7 @@ class OverworldMap {
     this.upperImage.src = config.upperSrc;
   }
 
+  // Draw lower layer of map to canvas
   drawLowerImage(ctx, cameraPerson) {
     ctx.drawImage(
       this.lowerImage,
@@ -17,12 +19,45 @@ class OverworldMap {
     );
   }
 
+  // Draw upper layer of map to canvas
   drawUpperImage(ctx, cameraPerson) {
     ctx.drawImage(
       this.upperImage,
       utils.withGrid(10.5) - cameraPerson.x,
       utils.withGrid(6) - cameraPerson.y
     );
+  }
+
+  // return whether or not there is a wall in the space the object is trying to move to
+  isSpaceTaken(currentX, currentY, direction) {
+    const { x, y } = utils.nextPosition(currentX, currentY, direction);
+
+    // if there is a wall, return true. else, return false
+    return this.walls[`${x},${y}`] || false;
+  }
+
+  // iterate through the game objects, and run mount on each one, passing this map
+  mountObjects() {
+    Object.values(this.gameObjects).forEach((o) => {
+      o.mount(this);
+    });
+  }
+
+  // add a wall to this map in the passed coordinates
+  addWall(x, y) {
+    this.walls[`${x},${y}`] = true;
+  }
+
+  // remove the wall from this map in the passed coordinates
+  removeWall(x, y) {
+    delete this.walls[`${x},${y}`];
+  }
+
+  // move the wall from the past coordinates to the object's next location
+  moveWall(wasX, wasY, direction) {
+    this.removeWall(wasX, wasY);
+    const { x, y } = utils.nextPosition(wasX, wasY, direction);
+    this.addWall(x, y);
   }
 }
 
@@ -41,6 +76,12 @@ window.OverworldMaps = {
         y: utils.withGrid(9),
         src: '/images/characters/people/npc1.png'
       })
+    },
+    walls: {
+      [utils.asGridCoord(7, 6)]: true,
+      [utils.asGridCoord(8, 6)]: true,
+      [utils.asGridCoord(7, 7)]: true,
+      [utils.asGridCoord(8, 7)]: true
     }
   },
   Kitchen: {
