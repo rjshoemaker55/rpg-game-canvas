@@ -9,7 +9,7 @@ class OverworldMap {
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
 
-    this.isCutscenePlaying = false;
+    this.isCutscenePlaying = true;
   }
 
   // Draw lower layer of map to canvas
@@ -50,6 +50,26 @@ class OverworldMap {
       // mount the game object
       object.mount(this);
     });
+  }
+
+  async startCutscene(events) {
+    // stop all objects from doing theyre normal behavior loop
+    // and stop hero from being able to move
+    this.isCutscenePlaying = true;
+
+    // loop through each event for this map
+    for (let i = 0; i < events.length; i++) {
+      // create a new event object for each event, passing in the current event in the array and this map
+      const eventHandler = new OverworldEvent({
+        event: events[i],
+        map: this
+      });
+
+      // init the event, and when its done, set cutscene to false
+      await eventHandler.init();
+    }
+
+    this.isCutscenePlaying = false;
   }
 
   // add a wall to this map in the passed coordinates
@@ -97,7 +117,7 @@ window.OverworldMaps = {
         src: '/images/characters/people/npc2.png',
         behaviorLoop: [
           { type: 'walk', direction: 'left' },
-          // { type: 'stand', direction: 'up', time: 800 },
+          { type: 'stand', direction: 'up', time: 800 },
           { type: 'walk', direction: 'up' },
           { type: 'walk', direction: 'right' },
           { type: 'walk', direction: 'down' }
