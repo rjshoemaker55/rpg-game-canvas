@@ -42,32 +42,47 @@ class Overworld {
     step();
   }
 
+  bindActionInput() {
+    new KeyPressListener('Enter', () => {
+      this.map.checkForActionCutscene();
+    });
+  }
+
   init() {
     this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
     this.map.mountObjects();
+
+    this.bindActionInput();
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();
 
     this.startGameLoop();
 
-    this.map.startCutscene([
-      { who: 'hero', type: 'walk', direction: 'up' },
-      { who: 'hero', type: 'walk', direction: 'right' },
-      { who: 'hero', type: 'walk', direction: 'right' },
-      { who: 'hero', type: 'walk', direction: 'right' },
-      { who: 'hero', type: 'walk', direction: 'right' },
-      { who: 'hero', type: 'walk', direction: 'up' },
-      { who: 'hero', type: 'walk', direction: 'right' },
-      { who: 'hero', type: 'stand', direction: 'down', time: 800 },
-      { who: 'npcA', type: 'walk', direction: 'right' },
-      { who: 'npcA', type: 'walk', direction: 'right' },
-      { who: 'npcA', type: 'walk', direction: 'right' },
-      { who: 'npcA', type: 'walk', direction: 'up' },
-      { who: 'npcA', type: 'walk', direction: 'up' },
-      { who: 'npcA', type: 'walk', direction: 'up' },
-      { who: 'npcA', type: 'walk', direction: 'up' },
-      { who: 'npcA', type: 'stand', direction: 'up', time: 800 }
-    ]);
+    // this.map.startCutscene([
+    //   { who: 'hero', type: 'walk', direction: 'up' },
+    //   { who: 'hero', type: 'walk', direction: 'right' },
+    //   { who: 'hero', type: 'walk', direction: 'right' },
+    //   { who: 'hero', type: 'walk', direction: 'right' },
+    //   { who: 'hero', type: 'walk', direction: 'right' },
+    //   { who: 'hero', type: 'walk', direction: 'up' },
+    //   { who: 'hero', type: 'walk', direction: 'right' },
+    //   { who: 'hero', type: 'stand', direction: 'down', time: 800 },
+    //   { who: 'npcA', type: 'walk', direction: 'right' },
+    //   { who: 'npcA', type: 'walk', direction: 'right' },
+    //   { who: 'npcA', type: 'walk', direction: 'right' },
+    //   { who: 'npcA', type: 'walk', direction: 'up' },
+    //   { who: 'npcA', type: 'walk', direction: 'up' },
+    //   { who: 'npcA', type: 'walk', direction: 'up' },
+    //   { who: 'npcA', type: 'walk', direction: 'up' },
+    //   { type: 'textMessage', text: 'Welcome to Pizza Legends!' },
+    //   { who: 'npcA', type: 'walk', direction: 'down' },
+    //   { who: 'npcA', type: 'walk', direction: 'down' },
+    //   { who: 'npcA', type: 'walk', direction: 'down' },
+    //   { who: 'npcA', type: 'walk', direction: 'down' },
+    //   { who: 'npcA', type: 'walk', direction: 'left' },
+    //   { who: 'npcA', type: 'walk', direction: 'left' },
+    //   { who: 'npcA', type: 'walk', direction: 'left' }
+    // ]);
   }
 }
