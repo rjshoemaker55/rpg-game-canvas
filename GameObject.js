@@ -15,6 +15,8 @@ class GameObject {
     // set the behavior loop sent from the config or empty, and start the index at 0
     this.behaviorLoop = config.behaviorLoop || [];
     this.behaviorLoopIndex = 0;
+
+    this.talking = config.talking || [];
   }
 
   // add a wall to the map where the object is

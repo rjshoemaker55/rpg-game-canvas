@@ -52,12 +52,13 @@ class OverworldMap {
     });
   }
 
+  // takes in an array of events
   async startCutscene(events) {
     // stop all objects from doing theyre normal behavior loop
     // and stop hero from being able to move
     this.isCutscenePlaying = true;
 
-    // loop through each event for this map
+    // loop through each event passed in for this game object
     for (let i = 0; i < events.length; i++) {
       // create a new event object for each event, passing in the current event in the array and this map
       const eventHandler = new OverworldEvent({
@@ -78,12 +79,25 @@ class OverworldMap {
   }
 
   checkForActionCutscene() {
+    // instantiate a new constant called hero with the value being the hero Person object
     const hero = this.gameObjects['hero'];
+
+    // get the next coords for the player
     const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
+
+    // loop through each game object value, and find out if one is in the location we are in front of
+    // returns the game object that matches
     const match = Object.values(this.gameObjects).find((object) => {
       return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`;
     });
+
     console.log(match);
+
+    // if there was a game object matching what were looking for and if it has a talking event,
+    if (!this.isCutscenePlaying && match && match.talking.length) {
+      // start a cutscene and pass in the talking events from the game object
+      this.startCutscene(match.talking[0].events);
+    }
   }
 
   // add a wall to this map in the passed coordinates
@@ -123,6 +137,20 @@ window.OverworldMaps = {
           { type: 'stand', direction: 'up', time: 800 },
           { type: 'stand', direction: 'right', time: 800 },
           { type: 'stand', direction: 'up', time: 800 }
+        ],
+        talking: [
+          {
+            events: [
+              {
+                type: 'textMessage',
+                text: 'Why hello there.'
+              },
+              {
+                type: 'textMessage',
+                text: 'Im busy, go away'
+              }
+            ]
+          }
         ]
       }),
       npcB: new Person({

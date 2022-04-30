@@ -12,7 +12,12 @@ class TextMessage {
 
     this.element.innerHTML = `
       <p class="TextMessage_p">${this.text}</p>
+      <button class="TextMessage_button">Next</button>
     `;
+
+    this.element.querySelector('button').addEventListener('click', () => {
+      this.done();
+    });
 
     this.actionListener = new KeyPressListener('Enter', () => {
       this.actionListener.unbind();
