@@ -1,0 +1,16 @@
+.Combatant {
+  width: 67px;
+  height: 14px;
+  background: url('/images/ui/combatant-plate.png') no-repeat no-repeat;
+  position: absolute;
+}
+
+.Combatant[data-team='player'] {
+  left: 46px;
+  top: 70px;
+}
+
+.Combatant[data-team='enemy'] {
+  top: 28px;
+  right: 77px;
+}
