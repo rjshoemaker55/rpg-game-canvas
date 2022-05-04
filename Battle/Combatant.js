@@ -20,9 +20,9 @@ class Combatant {
         <img class="Combatant_character" alt="${this.name}" src="${this.src}" />
       </div>
       <img class="Combatant_type" src="${this.icon}" alt="${this.type}" />
-      <svg viewBox ="0 0 26 3" class="Combatant_life-container">
+      <svg viewBox="0 0 26 3" class="Combatant_life-container">
         <rect x=0 y=0 width="0%" height=1 fill="#82ff71" />
-        <rect x=0 y=1 width="0%" height=1 fill="#3ef126" />
+        <rect x=0 y=1 width="0%" height=2 fill="#3ef126" />
       </svg>
       <svg viewBox="0 0 26 2" class="Combatant_xp-container">
         <rect x=0 y=0 width="0%" height=1 fill="#ffd76a" />
@@ -32,5 +32,8 @@ class Combatant {
     `;
   }
 
-  init() {}
+  init(container) {
+    this.createElement();
+    container.appendChild(this.hudElement);
+  }
 }
