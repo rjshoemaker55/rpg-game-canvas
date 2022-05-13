@@ -9,7 +9,7 @@
   transform: scale(2);
 }
 
-.Battle .Combatant [data-active='false'] {
+.Battle .Combatant[data-active='false'] {
   opacity: 0;
 }
 
@@ -90,7 +90,8 @@
 
 .Combatant_level {
   position: absolute;
-  font-size: 12px;
+  font-size: 8px;
+  font-weight: bold;
   right: 2px;
   top: -1px;
   width: 17px;

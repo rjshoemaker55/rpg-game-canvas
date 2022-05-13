@@ -5,9 +5,10 @@ class Battle {
         {
           ...Pizzas.s001,
           team: 'player',
-          hp: 50,
-          mapHp: 50,
-          xp: 0,
+          hp: 30,
+          maxHp: 50,
+          xp: 75,
+          maxXp: 100,
           level: 1,
           status: null
         },
@@ -18,7 +19,8 @@ class Battle {
           ...Pizzas.v001,
           team: 'enemy',
           hp: 50,
-          mapHp: 50,
+          maxHp: 50,
+          maxXp: 100,
           xp: 20,
           level: 1
         },
@@ -29,12 +31,18 @@ class Battle {
           ...Pizzas.f001,
           team: 'enemy',
           hp: 50,
-          mapHp: 50,
+          maxHp: 50,
           xp: 30,
+          maxXp: 100,
           level: 1
         },
         this
       )
+    };
+
+    this.activeCombatants = {
+      player: 'player1',
+      enemy: 'enemy1'
     };
   }
 

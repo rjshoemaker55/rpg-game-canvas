@@ -1,11 +1,24 @@
 class Combatant {
   constructor(config, battle) {
     Object.keys(config).forEach((key) => {
-      // hp: 10
       this[key] = config[key];
     });
 
     this.battle = battle;
+    console.log(this);
+  }
+
+  get hpPercent() {
+    const percent = (this.hp / this.maxHp) * 100;
+    return percent > 0 ? percent : 0;
+  }
+
+  get xpPercent() {
+    return (this.xp / this.maxXp) * 100;
+  }
+
+  get isActive() {
+    return this.battle.activeCombatants[this.team] === this.id;
   }
 
   createElement() {
@@ -30,10 +43,33 @@ class Combatant {
       </svg>
       <p class="Combtatant_status"></p>
     `;
+
+    this.hpFills = this.hudElement.querySelectorAll(
+      '.Combatant_life-container > rect'
+    );
+
+    this.xpFills = this.hudElement.querySelectorAll(
+      '.Combatant_xp-container > rect'
+    );
+  }
+
+  update(changes = {}) {
+    // update combatant data
+    Object.keys(changes).forEach((key) => {
+      this[key] = changes[key];
+    });
+
+    this.hudElement.setAttribute('data-active', this.isActive);
+
+    this.hpFills.forEach((rect) => (rect.style.width = `${this.hpPercent}%`));
+    this.xpFills.forEach((rect) => (rect.style.width = `${this.xpPercent}%`));
+
+    this.hudElement.querySelector('.Combatant_level').innerText = this.level;
   }
 
   init(container) {
     this.createElement();
     container.appendChild(this.hudElement);
+    this.update();
   }
 }
